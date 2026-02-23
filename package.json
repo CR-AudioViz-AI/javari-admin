@@ -13,7 +13,7 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "@supabase/supabase-js": "^2.39.0",
-    "openai": "^4.20.1",
+    "openai": "^6.23.0",
     "axios": "^1.6.2",
     "cheerio": "^1.0.0-rc.12",
     "csv-parse": "^5.5.3",
