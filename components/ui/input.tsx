@@ -1,8 +1,7 @@
 import React from "react"
-export const Input = (p:any)=><input {...p} style={{padding:"8px",borderRadius:"4px",border:"1px solid #333",...p.style}}/>
-export const Select = ({children,...p}:any)=><select {...p}>{children}</select>
-export const SelectTrigger = ({children,...p}:any)=><div {...p}>{children}</div>
-export const SelectContent = ({children,...p}:any)=><div {...p}>{children}</div>
-export const SelectItem = ({value,children,...p}:any)=><option value={value} {...p}>{children}</option>
-export const SelectValue = ({placeholder,...p}:any)=><span {...p}>{placeholder}</span>
-export const Progress = ({value,...p}:any)=><progress value={value} max={100} {...p} style={{width:"100%",...p.style}}/>
+export interface InputProps extends React.InputHTMLAttributes<HTMLInputElement>{}
+export const Input = React.forwardRef<HTMLInputElement,InputProps>(
+  ({className="",...p},ref) =>
+    <input className={"flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 "+className} ref={ref}{...p}/>
+)
+Input.displayName="Input"
