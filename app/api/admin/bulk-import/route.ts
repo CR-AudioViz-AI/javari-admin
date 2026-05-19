@@ -23,9 +23,11 @@ export const maxDuration = 300;
 export const dynamic = 'force-dynamic';
 
 
-const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY!,
-});
+let _openai: any = null;
+function getOpenai() {
+  if (!_openai) _openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
+  return _openai;
+}
 
 interface ImportJob {
   id: string;
@@ -577,7 +579,7 @@ async function processRSSItem(
 async function generateEmbedding(text: string): Promise<number[]> {
   const truncated = text.length > 32000 ? text.substring(0, 32000) : text;
   
-  const response = await openai.embeddings.create({
+  const response = await getOpenai().embeddings.create({
     model: 'text-embedding-3-small',
     input: truncated,
   });
