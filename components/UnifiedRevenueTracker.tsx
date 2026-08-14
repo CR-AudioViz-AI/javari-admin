@@ -46,8 +46,8 @@ const REVENUE_STREAMS: RevenueStream[] = [
   { id: '3', name: 'AI Credits', app: 'All Apps', type: 'credits', amount: 6780, change: 890, changePercent: 15.1, transactions: 1234, period: 'This Month' },
   { id: '4', name: 'Affiliate - Trading', app: 'Market Oracle', type: 'affiliate', amount: 4560, change: 780, changePercent: 20.6, transactions: 89, period: 'This Month' },
   { id: '5', name: 'Affiliate - Travel', app: 'Orlando Deals', type: 'affiliate', amount: 3420, change: -120, changePercent: -3.4, transactions: 67, period: 'This Month' },
-  { id: '6', name: 'Course Sales', app: 'CravBarrels', type: 'one-time', amount: 2890, change: 450, changePercent: 18.4, transactions: 58, period: 'This Month' },
-  { id: '7', name: 'Marketplace Fees', app: 'CravCardverse', type: 'one-time', amount: 2340, change: 670, changePercent: 40.1, transactions: 234, period: 'This Month' },
+  { id: '6', name: 'Course Sales', app: 'Javari Spirits', type: 'one-time', amount: 2890, change: 450, changePercent: 18.4, transactions: 58, period: 'This Month' },
+  { id: '7', name: 'Marketplace Fees', app: 'JavariCardverse', type: 'one-time', amount: 2340, change: 670, changePercent: 40.1, transactions: 234, period: 'This Month' },
 ]
 
 const APP_REVENUES: AppRevenue[] = [
@@ -55,8 +55,8 @@ const APP_REVENUES: AppRevenue[] = [
   { app: 'Logo Studio', icon: '🎨', mrr: 12300, arr: 147600, growth: 18.2, subscribers: 492, churnRate: 4.1, ltv: 380, arpu: 25.00 },
   { app: 'Social Graphics', icon: '📱', mrr: 8900, arr: 106800, growth: 15.8, subscribers: 356, churnRate: 5.2, ltv: 320, arpu: 25.00 },
   { app: 'Invoice Generator', icon: '📄', mrr: 6200, arr: 74400, growth: 12.4, subscribers: 248, churnRate: 4.8, ltv: 290, arpu: 25.00 },
-  { app: 'CravBarrels', icon: '🥃', mrr: 4800, arr: 57600, growth: 28.6, subscribers: 192, churnRate: 2.8, ltv: 520, arpu: 25.00 },
-  { app: 'CravCardverse', icon: '🃏', mrr: 3900, arr: 46800, growth: 35.2, subscribers: 156, churnRate: 3.5, ltv: 410, arpu: 25.00 },
+  { app: 'Javari Spirits', icon: '🥃', mrr: 4800, arr: 57600, growth: 28.6, subscribers: 192, churnRate: 2.8, ltv: 520, arpu: 25.00 },
+  { app: 'JavariCardverse', icon: '🃏', mrr: 3900, arr: 46800, growth: 35.2, subscribers: 156, churnRate: 3.5, ltv: 410, arpu: 25.00 },
   { app: 'Orlando Deals', icon: '🏰', mrr: 2400, arr: 28800, growth: 8.9, subscribers: 96, churnRate: 6.1, ltv: 240, arpu: 25.00 },
 ]
 

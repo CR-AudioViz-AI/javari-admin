@@ -38,7 +38,7 @@ const AFFILIATE_PROGRAMS: AffiliateProgram[] = [
   { id: '4', name: 'Discover Cars', logo: '🚗', commission: '3% lifetime', type: 'recurring', status: 'active', platforms: ['Orlando Trip Deal', 'Travel'], link: 'https://www.discovercars.com', clicks: 890, conversions: 45, revenue: 1250, lastPayout: '2024-12-10' },
   { id: '5', name: 'Printful', logo: '👕', commission: '10% + margins', type: 'one-time', status: 'active', platforms: ['Market Forge'], link: 'https://www.printful.com', clicks: 567, conversions: 89, revenue: 2340, lastPayout: '2024-12-22' },
   { id: '6', name: 'Crawlbase', logo: '🕷️', commission: '25% recurring', type: 'recurring', status: 'active', platforms: ['Developer Tools'], link: 'https://crawlbase.com/?s=mMXcTb6S', clicks: 234, conversions: 12, revenue: 890, lastPayout: '2024-12-05' },
-  { id: '7', name: 'Awin Network', logo: '🔗', commission: 'Varies', type: 'one-time', status: 'active', platforms: ['CravBarrels', 'Multiple'], link: 'https://www.awin.com', clicks: 1890, conversions: 78, revenue: 1560, lastPayout: '2024-12-15' },
+  { id: '7', name: 'Awin Network', logo: '🔗', commission: 'Varies', type: 'one-time', status: 'active', platforms: ['Javari Spirits', 'Multiple'], link: 'https://www.awin.com', clicks: 1890, conversions: 78, revenue: 1560, lastPayout: '2024-12-15' },
   { id: '8', name: 'Klook', logo: '✈️', commission: '3-5% per booking', type: 'per-booking', status: 'active', platforms: ['Orlando Trip Deal'], link: 'https://www.klook.com?aid=106921', clicks: 1230, conversions: 67, revenue: 1890, lastPayout: '2024-12-12' },
   // Pending programs
   { id: '9', name: 'Writesonic', logo: '✍️', commission: '30% lifetime', type: 'recurring', status: 'pending', platforms: ['Javari AI'], link: '', clicks: 0, conversions: 0, revenue: 0, lastPayout: '-' },
@@ -50,7 +50,7 @@ const PLATFORM_REVENUE: PlatformRevenue[] = [
   { platform: 'Orlando Trip Deal', icon: '🏰', affiliates: ['Viator', 'GetYourGuide', 'Klook', 'Discover Cars'], monthlyRevenue: 11710, projectedAnnual: 140520, growth: 24.5 },
   { platform: 'Javari AI', icon: '🤖', affiliates: ['ElevenLabs'], monthlyRevenue: 2904, projectedAnnual: 34848, growth: 18.2 },
   { platform: 'Market Forge', icon: '🎨', affiliates: ['Printful'], monthlyRevenue: 2340, projectedAnnual: 28080, growth: 35.8 },
-  { platform: 'CravBarrels', icon: '🥃', affiliates: ['Awin Network'], monthlyRevenue: 1560, projectedAnnual: 18720, growth: 12.4 },
+  { platform: 'Javari Spirits', icon: '🥃', affiliates: ['Awin Network'], monthlyRevenue: 1560, projectedAnnual: 18720, growth: 12.4 },
   { platform: 'Developer Tools', icon: '💻', affiliates: ['Crawlbase'], monthlyRevenue: 890, projectedAnnual: 10680, growth: 28.9 },
 ]
 

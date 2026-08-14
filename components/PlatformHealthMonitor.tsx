@@ -55,20 +55,20 @@ const SERVICES: ServiceStatus[] = [
 ]
 
 const DEPLOYMENTS: Deployment[] = [
-  { app: 'crav-market-oracle', status: 'ready', url: 'https://crav-market-oracle.vercel.app', lastDeployed: '15 min ago', commitMessage: 'Add gamification system', branch: 'main' },
-  { app: 'crav-logo-studio', status: 'ready', url: 'https://crav-logo-studio.vercel.app', lastDeployed: '22 min ago', commitMessage: 'Update training hub', branch: 'main' },
-  { app: 'crav-social-graphics', status: 'building', url: 'https://crav-social-graphics.vercel.app', lastDeployed: '2 min ago', commitMessage: 'Fix TypeScript errors', branch: 'main' },
-  { app: 'crav-invoice-generator', status: 'ready', url: 'https://crav-invoice-generator.vercel.app', lastDeployed: '18 min ago', commitMessage: 'Add export features', branch: 'main' },
-  { app: 'cravbarrels', status: 'ready', url: 'https://cravbarrels.vercel.app', lastDeployed: '35 min ago', commitMessage: 'Virtual tasting room', branch: 'main' },
-  { app: 'crav-cardverse', status: 'ready', url: 'https://crav-cardverse.vercel.app', lastDeployed: '40 min ago', commitMessage: 'Trading hub component', branch: 'main' },
-  { app: 'crav-orlando-deals', status: 'ready', url: 'https://crav-orlando-deals.vercel.app', lastDeployed: '1 hour ago', commitMessage: 'Crowd calendar AI', branch: 'main' },
-  { app: 'crav-admin', status: 'ready', url: 'https://crav-admin.vercel.app', lastDeployed: '2 hours ago', commitMessage: 'Revenue tracking', branch: 'main' },
+  { app: 'javari-market-oracle', status: 'ready', url: 'https://craudiovizai.com/apps/market-oracle', lastDeployed: '15 min ago', commitMessage: 'Add gamification system', branch: 'main' },
+  { app: 'javari-logo-studio', status: 'ready', url: 'https://javarilogo.com/brand', lastDeployed: '22 min ago', commitMessage: 'Update training hub', branch: 'main' },
+  { app: 'javari-social-graphics', status: 'building', url: 'https://craudiovizai.com/apps/social-graphics', lastDeployed: '2 min ago', commitMessage: 'Fix TypeScript errors', branch: 'main' },
+  { app: 'javari-invoice-generator', status: 'ready', url: 'https://craudiovizai.com/apps/invoice-generator', lastDeployed: '18 min ago', commitMessage: 'Add export features', branch: 'main' },
+  { app: 'javarispirits', status: 'ready', url: 'https://javarispirits.vercel.app', lastDeployed: '35 min ago', commitMessage: 'Virtual tasting room', branch: 'main' },
+  { app: 'javari-cardverse', status: 'ready', url: 'https://javari-cardverse.vercel.app', lastDeployed: '40 min ago', commitMessage: 'Trading hub component', branch: 'main' },
+  { app: 'javari-orlando-deals', status: 'ready', url: 'https://javari-orlando-deals.vercel.app', lastDeployed: '1 hour ago', commitMessage: 'Crowd calendar AI', branch: 'main' },
+  { app: 'javari-admin', status: 'ready', url: 'https://javari-admin.vercel.app', lastDeployed: '2 hours ago', commitMessage: 'Revenue tracking', branch: 'main' },
 ]
 
 const ALERTS: Alert[] = [
   { id: '1', severity: 'warning', message: 'OpenAI API response time elevated (850ms avg)', service: 'OpenAI API', timestamp: '5 min ago', acknowledged: false },
   { id: '2', severity: 'info', message: 'Scheduled maintenance: Supabase DB optimization tonight 2-4 AM EST', service: 'Supabase', timestamp: '1 hour ago', acknowledged: true },
-  { id: '3', severity: 'info', message: 'New deployment: crav-social-graphics building', service: 'Vercel', timestamp: '2 min ago', acknowledged: false },
+  { id: '3', severity: 'info', message: 'New deployment: javari-social-graphics building', service: 'Vercel', timestamp: '2 min ago', acknowledged: false },
 ]
 
 const METRICS: Metric[] = [
