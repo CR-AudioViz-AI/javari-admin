@@ -22,7 +22,8 @@
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.0.0",
     "tailwind-merge": "^2.1.0",
-    "lucide-react": "^0.263.1"
+    "lucide-react": "^0.263.1",
+    "@craudioviz/platform-sdk": "git+https://github.com/CR-AudioViz-AI/platform-sdk.git"
   },
   "devDependencies": {
     "@types/node": "^20",

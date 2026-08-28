@@ -1,8 +1,9 @@
 // lib/supabase.ts May 16 2026
 import{createClient as _c}from "@supabase/supabase-js"
-const URL=process.env.NEXT_PUBLIC_SUPABASE_URL??""
-const ANON=process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY??""
-const SVC=process.env.SUPABASE_SERVICE_ROLE_KEY??ANON
+import { secretKey, publishableKey, supabaseUrl } from "@craudioviz/platform-sdk";
+const URL=supabaseUrl()
+const ANON=publishableKey()
+const SVC=secretKey()??ANON
 export const supabase=_c(URL,ANON)
 export const supabaseAdmin=_c(URL,SVC,{auth:{persistSession:false}})
 export const createClient=()=>_c(URL,ANON)
