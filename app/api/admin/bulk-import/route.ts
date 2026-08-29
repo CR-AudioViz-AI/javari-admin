@@ -1,12 +1,39 @@
 /**
  * JAVARI AI - BULK KNOWLEDGE IMPORT API
  * Rapid knowledge ingestion from multiple source types
- * Built for speed and scale
+ *
+ * ───────────────────────────────────────────────────────────────────────────
+ * 2026-08-29 — THIS ROUTE WAS PUBLIC, AND IT FETCHES ANY URL YOU GIVE IT.
+ *
+ * CodeQL flagged five js/request-forgery findings here (critical). The finding
+ * understates it. There was no authentication of any kind on this route, this
+ * repo has no middleware, and all three of its API routes are under /api/admin/
+ * with no gate on any of them.
+ *
+ * So an anonymous POST could:
+ *   - make this server fetch any URL, including http://169.254.169.254/ and
+ *     anything else reachable from the deployment's network
+ *   - write whatever came back into the knowledge base, with the service-role
+ *     key in scope
+ *
+ * Two things were missing and both are now here:
+ *   requireAdminSecret  fails CLOSED — an unset or short secret refuses every
+ *                       request with 503 rather than defaulting to anything
+ *   assertFetchable     every caller-supplied URL passes the egress guard
+ *                       before axios sees it: scheme allowlist, private and
+ *                       link-local ranges refused, DNS resolved and re-checked
+ *
+ * Both live in @craudioviz/platform-sdk and are imported by path rather than
+ * from the package barrel — the guard pulls node:dns and node:net, and webpack
+ * rejects the `node:` scheme before any resolve config is consulted.
+ * ───────────────────────────────────────────────────────────────────────────
  */
 
 import { NextRequest, NextResponse } from 'next/server';
 import OpenAI from 'openai';
 import axios from 'axios';
+import { requireAdminSecret } from '@craudioviz/platform-sdk/lib/require-admin-secret';
+import { guardUrl, EgressBlockedError } from '@craudioviz/platform-sdk/lib/egress-guard';
 import * as cheerio from 'cheerio';
 import { parse as parseCSV } from 'csv-parse/sync';
 import { secretKey, supabaseUrl } from "@craudioviz/platform-sdk";
@@ -51,6 +78,10 @@ const jobs = new Map<string, ImportJob>();
  */
 export async function POST(request: NextRequest) {
   try {
+    // Fails closed: unset or short secret refuses every request.
+    const denied = requireAdminSecret(request, 'ADMIN_SECRET_KEY');
+    if (denied) return denied;
+
     const body = await request.json();
     const { type, source, category, tags } = body;
 
@@ -185,6 +216,23 @@ async function processImport(
 /**
  * Import from XML sitemap (FAST - gets all URLs at once)
  */
+/**
+ * Refuse a caller-supplied URL before anything fetches it.
+ *
+ * axios follows redirects by default, so the guard alone is not enough — a
+ * permitted host that 302s to 169.254.169.254 would still be followed. Every
+ * axios call below therefore also pins maxRedirects to 0 and a timeout, and
+ * a redirect is surfaced as a refusal rather than chased.
+ */
+async function assertFetchable(url: string): Promise<void> {
+  const verdict = await guardUrl(url);
+  if (!verdict.allowed) {
+    throw new EgressBlockedError(verdict.reason);
+  }
+}
+
+const FETCH_OPTS = { maxRedirects: 0, timeout: 15000 } as const;
+
 async function importFromSitemap(
   job: ImportJob,
   sitemapUrl: string,
@@ -194,7 +242,8 @@ async function importFromSitemap(
   console.log(`[${job.id}] Fetching sitemap: ${sitemapUrl}`);
   
   // Fetch sitemap
-  const response = await axios.get(sitemapUrl);
+  await assertFetchable(sitemapUrl);
+  const response = await axios.get(sitemapUrl, FETCH_OPTS);
   const $ = cheerio.load(response.data, { xmlMode: true });
   
   // Extract all URLs
@@ -244,7 +293,8 @@ async function importFromCSV(
   console.log(`[${job.id}] Fetching CSV: ${csvUrl}`);
   
   // Fetch CSV
-  const response = await axios.get(csvUrl);
+  await assertFetchable(csvUrl);
+  const response = await axios.get(csvUrl, FETCH_OPTS);
   const records = parseCSV(response.data, {
     columns: true,
     skip_empty_lines: true,
@@ -291,7 +341,8 @@ async function importFromAPI(
   console.log(`[${job.id}] Fetching API: ${apiUrl}`);
   
   // Fetch from API
-  const response = await axios.get(apiUrl);
+  await assertFetchable(apiUrl);
+  const response = await axios.get(apiUrl, FETCH_OPTS);
   const data = response.data;
   
   // Handle different API response formats
@@ -346,7 +397,8 @@ async function importFromRSS(
 ) {
   console.log(`[${job.id}] Fetching RSS: ${rssUrl}`);
   
-  const response = await axios.get(rssUrl);
+  await assertFetchable(rssUrl);
+  const response = await axios.get(rssUrl, FETCH_OPTS);
   const $ = cheerio.load(response.data, { xmlMode: true });
   
   // Extract items
@@ -427,10 +479,15 @@ async function processPage(
   tags: string[]
 ) {
   try {
-    // Fetch page
+    // Fetch page. processPage is reached from every import type, including
+    // every URL harvested out of a caller-supplied sitemap — so the guard
+    // matters more here than at the four entry points, not less: the sitemap's
+    // <loc> entries are attacker-controlled too.
+    await assertFetchable(url);
     const response = await axios.get(url, {
       headers: { 'User-Agent': 'Mozilla/5.0' },
       timeout: 10000,
+      maxRedirects: 0,
     });
 
     const $ = cheerio.load(response.data);
