@@ -1,3 +1,18 @@
+// 2026-08-29: `supabase` WAS NEVER DECLARED IN THIS FILE.
+// getSupabase() is defined here and was called by NOTHING; every database call
+// referenced a bare `supabase` that does not exist, so each one threw
+// ReferenceError at runtime. TS2304 said so plainly once this repo got a
+// typecheck.
+//
+// Same defect as /api/auth in core, which imported createClient and referenced an
+// undeclared `supabase` in every branch — every call returned 500 and the reason
+// was invisible because nothing checked types.
+//
+// Each call site now goes through the factory. It is a lazy service client with
+// persistSession:false, so calling it per statement is correct rather than
+// wasteful, and it avoids a module-scope client — which is what breaks `next
+// build` when a route is evaluated at build time.
+
 /**
  * JAVARI AI - KNOWLEDGE VERIFICATION TEST SUITE
  * 110 questions across 5 priority domains
@@ -206,7 +221,7 @@ export async function GET() {
 async function testQuestion(question: string, keywords: string[]): Promise<boolean> {
   try {
     // Search knowledge base
-    const { data, error } = await supabase
+    const { data, error } = await getSupabase()
       .rpc('search_documentation', {
         query_text: question,
         match_count: 5,
