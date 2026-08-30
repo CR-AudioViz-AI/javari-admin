@@ -1,3 +1,18 @@
+// 2026-08-29: `supabase` WAS NEVER DECLARED IN THIS FILE.
+// getSupabase() is defined here and was called by NOTHING; every database call
+// referenced a bare `supabase` that does not exist, so each one threw
+// ReferenceError at runtime. TS2304 said so plainly once this repo got a
+// typecheck.
+//
+// Same defect as /api/auth in core, which imported createClient and referenced an
+// undeclared `supabase` in every branch — every call returned 500 and the reason
+// was invisible because nothing checked types.
+//
+// Each call site now goes through the factory. It is a lazy service client with
+// persistSession:false, so calling it per statement is correct rather than
+// wasteful, and it avoids a module-scope client — which is what breaks `next
+// build` when a route is evaluated at build time.
+
 /**
  * JAVARI AI - BULK KNOWLEDGE IMPORT API
  * Rapid knowledge ingestion from multiple source types
@@ -253,7 +268,7 @@ async function importFromSitemap(
   console.log(`[${job.id}] Found ${urls.length} URLs`);
 
   // Create knowledge source
-  const { data: source } = await supabase
+  const { data: source } = await getSupabase()
     .from('knowledge_sources')
     .insert({
       name: category,
@@ -304,7 +319,7 @@ async function importFromCSV(
   console.log(`[${job.id}] Found ${records.length} records`);
 
   // Create knowledge source
-  const { data: source } = await supabase
+  const { data: source } = await getSupabase()
     .from('knowledge_sources')
     .insert({
       name: category,
@@ -361,7 +376,7 @@ async function importFromAPI(
   console.log(`[${job.id}] Found ${items.length} items`);
 
   // Create knowledge source
-  const { data: source } = await supabase
+  const { data: source } = await getSupabase()
     .from('knowledge_sources')
     .insert({
       name: category,
@@ -413,7 +428,7 @@ async function importFromRSS(
   console.log(`[${job.id}] Found ${items.length} RSS items`);
 
   // Create knowledge source with RSS subscription
-  const { data: source } = await supabase
+  const { data: source } = await getSupabase()
     .from('knowledge_sources')
     .insert({
       name: category,
@@ -451,7 +466,7 @@ async function importFromURL(
 ) {
   job.total = 1;
   
-  const { data: source } = await supabase
+  const { data: source } = await getSupabase()
     .from('knowledge_sources')
     .insert({
       name: category,
@@ -514,7 +529,7 @@ async function processPage(
     const embedding = await generateEmbedding(`${title}\n\n${cleanContent}`);
 
     // Save to database
-    await supabase.from('documentation_pages').insert({
+    await getSupabase().from('documentation_pages').insert({
       source_id: sourceId,
       url,
       title,
@@ -551,7 +566,7 @@ async function processCSVRecord(
 
     const embedding = await generateEmbedding(`${title}\n\n${content}`);
 
-    await supabase.from('documentation_pages').insert({
+    await getSupabase().from('documentation_pages').insert({
       source_id: sourceId,
       url: record.url || `csv://${sourceId}/${record.id || Date.now()}`,
       title,
@@ -582,7 +597,7 @@ async function processAPIItem(
 
     const embedding = await generateEmbedding(`${title}\n\n${content}`);
 
-    await supabase.from('documentation_pages').insert({
+    await getSupabase().from('documentation_pages').insert({
       source_id: sourceId,
       url: item.url || item.link || `api://${sourceId}/${item.id}`,
       title,
@@ -611,7 +626,7 @@ async function processRSSItem(
     const content = `${item.title}\n\n${item.description}`;
     const embedding = await generateEmbedding(content);
 
-    await supabase.from('documentation_pages').insert({
+    await getSupabase().from('documentation_pages').insert({
       source_id: sourceId,
       url: item.link,
       title: item.title,
