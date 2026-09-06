@@ -269,7 +269,7 @@ async function importFromSitemap(
 
   // Create knowledge source
   const { data: source } = await getSupabase()
-    .from('knowledge_sources')
+    .from('javari_knowledge_sources')
     .insert({
       name: category,
       type: 'bulk_import',
@@ -320,7 +320,7 @@ async function importFromCSV(
 
   // Create knowledge source
   const { data: source } = await getSupabase()
-    .from('knowledge_sources')
+    .from('javari_knowledge_sources')
     .insert({
       name: category,
       type: 'bulk_import',
@@ -377,7 +377,7 @@ async function importFromAPI(
 
   // Create knowledge source
   const { data: source } = await getSupabase()
-    .from('knowledge_sources')
+    .from('javari_knowledge_sources')
     .insert({
       name: category,
       type: 'bulk_import',
@@ -429,7 +429,7 @@ async function importFromRSS(
 
   // Create knowledge source with RSS subscription
   const { data: source } = await getSupabase()
-    .from('knowledge_sources')
+    .from('javari_knowledge_sources')
     .insert({
       name: category,
       type: 'rss_feed',
@@ -467,7 +467,7 @@ async function importFromURL(
   job.total = 1;
   
   const { data: source } = await getSupabase()
-    .from('knowledge_sources')
+    .from('javari_knowledge_sources')
     .insert({
       name: category,
       type: 'single_url',
