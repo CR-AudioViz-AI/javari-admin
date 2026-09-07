@@ -80,7 +80,7 @@ export async function GET() {
   } catch (error: any) {
     console.error('[Knowledge Stats] Error:', error);
     return NextResponse.json(
-      { success: false, error: error.message },
+      { success: false, error: 'The request could not be completed.', code: 'INTERNAL_ERROR' },
       { status: 500 }
     );
   }
